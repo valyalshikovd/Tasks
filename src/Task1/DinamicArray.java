@@ -6,30 +6,30 @@ import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public class DinamicArray<T> implements Collection {
-    private Object[] base;
+public class DinamicArray<T> implements Collection<T> {
+    private T[] base;
     private int capacity;
 
-    public Object getBase() {
+    public T[] getBase() {
         return base;
     }
 
-    public void setBase(Object[] base) {
+    public void setBase(T[] base) {
         this.base = base;
     }
 
     public DinamicArray() {
         this.capacity = 10;
-        this.base = new Object[capacity];
+        this.base = (T[]) new Object[capacity];
     }
 
     public DinamicArray(int capacity) {
         this.capacity = capacity;
-        this.base = new Object[capacity];
+        this.base = (T[]) new Object[capacity];
     }
 
     @Override
-    public boolean add(Object elem) {
+    public boolean add(T elem) {
         for (int i = 0; i < capacity; i++) {
             if (base[i] == null) {
                 base[i] = elem;
@@ -37,7 +37,7 @@ public class DinamicArray<T> implements Collection {
             }
         }
         capacity = capacity * 2;
-        Object[] newBase = new Object[capacity];
+        T[] newBase = (T[]) new Object[capacity];
         for (int i = 0; i < base.length; i++) {
             newBase[i] = base[i];
         }
@@ -53,7 +53,7 @@ public class DinamicArray<T> implements Collection {
 
     @Override
     public boolean remove(Object o) {
-        Object[] res = new Object[base.length];
+        T[] res = (T[]) new Object[base.length];
         int counter = 0;
         for (int i = 0; i < base.length; i++){
             if(Objects.equals(base[i], o)){
@@ -66,8 +66,8 @@ public class DinamicArray<T> implements Collection {
         base = res;
         return true;
     }
-    public boolean removeFirst(Object o) {
-        Object[] res = new Object[base.length];
+    public boolean removeFirst(T o) {
+        T[] res = (T[]) new Object[base.length];
         int counter = 0;
         boolean flag = true;
         for (int i = 0; i < base.length; i++){
@@ -84,8 +84,8 @@ public class DinamicArray<T> implements Collection {
     }
 
     @Override
-    public boolean addAll(Collection c) {
-        for (Object i : c){
+    public boolean addAll(Collection<? extends T> c) {
+        for (T i : c){
             this.add(i);
         }
         return true;
@@ -94,7 +94,7 @@ public class DinamicArray<T> implements Collection {
 
     @Override
     public void clear() {
-        Object[] newBase = new Object[base.length];
+        T[] newBase = (T[]) new Object[10];
         base = newBase;
     }
 
@@ -104,10 +104,7 @@ public class DinamicArray<T> implements Collection {
         return Arrays.stream(base);
     }
 
-    @Override
-    public boolean retainAll(Collection c) {
-        return false;
-    }
+
 
     @Override
     public boolean removeAll(Collection c) {
@@ -118,10 +115,10 @@ public class DinamicArray<T> implements Collection {
     }
 
     @Override
-    public boolean containsAll(Collection c) {
+    public boolean containsAll(Collection<?> c) {
         for (Object i : c){
             boolean flag = false;
-            for (Object j : base){
+            for (T j : base){
                 if(Objects.equals(i, j)){
                     flag = true;
                     break;
@@ -135,7 +132,7 @@ public class DinamicArray<T> implements Collection {
     }
 
     public void printDinamicArray() {
-        for (Object i : base) {
+        for (T i : base) {
             System.out.print(i + " ");
         }
         System.out.println();
@@ -144,7 +141,7 @@ public class DinamicArray<T> implements Collection {
     @Override
     public int size() {
         int counter = 0;
-        for (Object i : base) {
+        for (T i : base) {
             if (i != null) {
                 counter++;
             }
@@ -154,7 +151,7 @@ public class DinamicArray<T> implements Collection {
 
     @Override
     public boolean isEmpty() {
-        for (Object i : base) {
+        for (T i : base) {
             if (i != null) {
                 return false;
             }
@@ -164,12 +161,16 @@ public class DinamicArray<T> implements Collection {
 
     @Override
     public boolean contains(Object o) {
-        for (Object i : base) {
-            if (Objects.equals(i, 0)) {
+        for (T i : base) {
+            if (Objects.equals(i, o)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public T get(Integer i){
+        return base[i];
     }
 
 
@@ -210,8 +211,8 @@ public Iterator iterator() {
 }
 
     @Override
-    public void forEach(Consumer action) {
-        Collection.super.forEach(action);
+    public void forEach(Consumer<? super T> action) {
+        ;
     }
     @Override
     public Object[] toArray(IntFunction generator) {
@@ -229,6 +230,10 @@ public Iterator iterator() {
     @Override
     public boolean removeIf(Predicate filter) {
         return Collection.super.removeIf(filter);
+    }
+    @Override
+    public boolean retainAll(Collection c) {
+        return false;
     }
 
 

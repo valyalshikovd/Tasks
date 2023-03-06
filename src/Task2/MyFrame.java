@@ -17,12 +17,12 @@ public class MyFrame extends JFrame{
         this.setResizable(false);
         this.setContentPane(panel);
 
-        посчитатьButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                btn();
-            }
-        });
+//        посчитатьButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                btn();
+//            }
+//        });
 
         buildingModel(table1);
         buildingModel(table2);
@@ -49,37 +49,37 @@ public class MyFrame extends JFrame{
             new Error();
         }
     }
-    private void btn(){
-        MyLinkedList list1 = new MyLinkedList<>();
-        MyLinkedList list2 = new MyLinkedList<>();
-        for(int i = 0; i < 5; i++){
-            list1.add(Integer.parseInt((String) table1.getValueAt(0, i)));
-            list2.add(Integer.parseInt((String) table2.getValueAt(0, i)));
-        }
-        MyLinkedList res = Main.unity(list1, list2);
-
-        LinkedListNode<Object> tmp = res.getFirstElement();
-        Object[][] ress = new Object[1][10];
-        int counter = 0;
-        while (tmp!=null){
-            if (counter == 10) {
-                break;
-            }
-            ress[0][counter] = tmp.getValue();
-            counter++;
-            tmp = tmp.getLink();
-        }
-        try {
-            Object[] names2 = {"", "", "", "", "", "", "", "", "", ""};
-            DefaultTableModel mode2 = new DefaultTableModel(ress, names2) {
-                public Class getColumnClass(int column) {
-                    return getValueAt(0, column).getClass();
-                }
-            };
-            table3.setModel(mode2);
-        }catch (Exception ex){
-            new Error();
-        }
-        System.out.println();
-    }
+//    private void btn(){
+//        MyLinkedList list1 = new MyLinkedList<>();
+//        MyLinkedList list2 = new MyLinkedList<>();
+//        for(int i = 0; i < 5; i++){
+//            list1.add(Integer.parseInt((String) table1.getValueAt(0, i)));
+//            list2.add(Integer.parseInt((String) table2.getValueAt(0, i)));
+//        }
+//        MyLinkedList res = Main.unity(list1, list2);
+//
+//        LinkedListNode<Object> tmp = res.getFirstElement();
+//        Object[][] ress = new Object[1][10];
+//        int counter = 0;
+//        while (tmp!=null){
+//            if (counter == 10) {
+//                break;
+//            }
+//            ress[0][counter] = tmp.getValue();
+//            counter++;
+//            tmp = tmp.getLink();
+//        }
+//        try {
+//            Object[] names2 = {"", "", "", "", "", "", "", "", "", ""};
+//            DefaultTableModel mode2 = new DefaultTableModel(ress, names2) {
+//                public Class getColumnClass(int column) {
+//                    return getValueAt(0, column).getClass();
+//                }
+//            };
+//            table3.setModel(mode2);
+//        }catch (Exception ex){
+//            new Error();
+//        }
+//        System.out.println();
+//    }
 }
