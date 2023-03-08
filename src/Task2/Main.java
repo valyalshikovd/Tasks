@@ -7,12 +7,16 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        MyLinkedList<Integer> list = new MyLinkedList<>(13);
-        list.add(32);
-        list.add(43);
-        Iterator<Integer> iter = list.iterator();
-        while (iter.hasNext()) {
-            System.out.println(iter.next());
-        }
+        MyLinkedList<Integer> list1 = new MyLinkedList<>(13);
+        list1.add(32);
+        list1.add(43);
+        MyLinkedList<Integer> list2 = new MyLinkedList<>(10);
+        list1.add(15);
+        list2.add(20);
+    }
+
+    public static MyLinkedList<Integer> solution(MyLinkedList<Integer> list1, MyLinkedList<Integer> list2) {
+        MyLinkedList<Integer> res = new MyLinkedList<>();
+
     }
 }

@@ -143,6 +143,9 @@ public class MyPriorityQueue {
             }
         }
     }
-
-
+    public void clear(){
+        firstElement = null;
+        lastElement = null;
+        size = 0;
+    }
 }
