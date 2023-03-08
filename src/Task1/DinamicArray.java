@@ -91,6 +91,11 @@ public class DinamicArray<T> implements Collection<T> {
         return true;
     }
 
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return false;
+    }
+
 
     @Override
     public void clear() {
@@ -169,6 +174,11 @@ public class DinamicArray<T> implements Collection<T> {
         return false;
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return null;
+    }
+
     public T get(Integer i){
         return base[i];
     }
@@ -205,36 +215,7 @@ public class DinamicArray<T> implements Collection<T> {
         return a;
     }
 /////////////////////////////////////////////////////////////////////////
-@Override
-public Iterator iterator() {
-    return null;
-}
 
-    @Override
-    public void forEach(Consumer<? super T> action) {
-        ;
-    }
-    @Override
-    public Object[] toArray(IntFunction generator) {
-        return Collection.super.toArray(generator);
-    }
-    @Override
-    public Stream parallelStream() {
-        return Collection.super.parallelStream();
-    }
-    @Override
-    public Spliterator spliterator() {
-        return Collection.super.spliterator();
-    }
-
-    @Override
-    public boolean removeIf(Predicate filter) {
-        return Collection.super.removeIf(filter);
-    }
-    @Override
-    public boolean retainAll(Collection c) {
-        return false;
-    }
 
 
 

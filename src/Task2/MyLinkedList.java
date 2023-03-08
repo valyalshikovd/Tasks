@@ -38,7 +38,8 @@ public class MyLinkedList<T> implements Collection<T> {
             this.index = index;
             this.next = next;
         }
-        private boolean nextExist(){
+
+        private boolean nextExist() {
             return next != null;
         }
 
@@ -54,20 +55,21 @@ public class MyLinkedList<T> implements Collection<T> {
     }
 
     private MyLinkedListNode<T> firstElementh;
-    private MyLinkedListNode<T> lastElementh;
+
     private int size;
 
     public MyLinkedList() {
         this.firstElementh = null;
-        this.lastElementh = null;
+
         this.size = 0;
     }
+
     public MyLinkedList(T value) {
         MyLinkedListNode<T> tmp = new MyLinkedListNode<>(value, 0, null);
         this.firstElementh = tmp;
-        this.lastElementh = tmp;
         this.size = 1;
     }
+
     @Override
     public int size() {
         return size;
@@ -75,14 +77,14 @@ public class MyLinkedList<T> implements Collection<T> {
 
     @Override
     public boolean isEmpty() {
-        return size==0;
+        return size == 0;
     }
 
     @Override
     public boolean contains(Object o) {
         MyLinkedListNode<T> current = firstElementh;
-        while (current.nextExist()){
-            if(current.getNext().getValue().equals(o)){
+        while (current.nextExist()) {
+            if (current.getNext().getValue().equals(o)) {
                 return true;
             }
             current = current.getNext();
@@ -92,7 +94,23 @@ public class MyLinkedList<T> implements Collection<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        class SimpleLinkedListIterator implements Iterator<T> {
+            MyLinkedListNode<T> curr = firstElementh;
+
+            @Override
+            public boolean hasNext() {
+                return curr != null;
+            }
+
+            @Override
+            public T next() {
+                T value = curr.value;
+                curr = curr.next;
+                return value;
+            }
+        }
+
+        return new SimpleLinkedListIterator();
     }
 
     @Override
@@ -100,7 +118,7 @@ public class MyLinkedList<T> implements Collection<T> {
         Object[] res = new Object[size];
         MyLinkedListNode<T> current = firstElementh;
         int counter = -1;
-        while (current != null){
+        while (current != null) {
             counter++;
             res[counter] = current.getValue();
             current = current.getNext();
@@ -114,83 +132,128 @@ public class MyLinkedList<T> implements Collection<T> {
     }
 
     @Override
-    public boolean add(T value){
-        if(firstElementh == null){
+    public boolean add(T value) {
+        if (firstElementh == null) {
             MyLinkedListNode<T> tmp = new MyLinkedListNode<>(value, 0, null);
             firstElementh = tmp;
-            lastElementh = tmp;
             this.size = 1;
-        }else{
+        } else {
             MyLinkedListNode<T> current = firstElementh;
-            while (current.nextExist()){
+            while (current.nextExist()) {
                 current = current.getNext();
             }
             current.setNext(new MyLinkedListNode<>(value, current.getIndex() + 1, null));
-            lastElementh = current.getNext();
             size++;
         }
         return true;
     }
-    public T get(int index){
+
+    public T get(int index) {
         MyLinkedListNode<T> current = firstElementh;
-        for (int i = 0; i < index + 1; i++){
+        for (int i = 0; i < index ; i++) {
             current = current.getNext();
         }
         return current.getValue();
     }
-    public void set(int index, T value){
+
+    public void set(int index, T value) {
         MyLinkedListNode<T> current = firstElementh;
-        for (int i = 0; i < index; i++){
+        for (int i = 0; i < index; i++) {
             current = current.getNext();
         }
         current.setValue(value);
     }
-    public void remove(int index){
-        if(index == 0){
+
+    public void removeIndex(int index) {
+        if (index == 0) {
             firstElementh = firstElementh.getNext();
-            size --;
+            size--;
             return;
         }
         MyLinkedListNode<T> current = firstElementh;
-        for (int i = 0; i < index - 1; i++){
+        for (int i = 0; i < index - 1; i++) {
             current = current.getNext();
         }
-        if(current.getNext().nextExist()){
+        if (current.getNext().nextExist()) {
             current.setNext(current.getNext().getNext());
-        }else{
+        } else {
             current.setNext(null);
-            lastElementh = current;
         }
-        size --;
+        size--;
     }
+
     @Override
     public boolean remove(Object o) {
+        if (firstElementh.getValue().equals(o)) {
+            firstElementh = firstElementh.getNext();
+        } else {
+            MyLinkedListNode<T> current = firstElementh;
+            while (!current.getNext().getValue().equals(o)) {
+                current = current.getNext();
+            }
+            if (current.getNext().nextExist()) {
+                current.setNext(current.getNext().getNext());
+                size--;
+            } else {
+                current.setNext(null);
+                size--;
+            }
+        }
+        return true;
 
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+        for (Object i : c) {
+            boolean fl = false;
+            MyLinkedListNode<T> current = firstElementh;
+            while (current != null) {
+                if (current.getValue().equals(i)) {
+                    fl = true;
+                    break;
+                }
+                current = current.getNext();
+            }
+            if (!fl) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        for(T i : c){
+            this.add(i);
+        }
+        return true;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        for (Object i : c){
+            this.remove(i);
+        }
+        return true;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        MyLinkedListNode<T> current = firstElementh;
+        for (int i = 0; i < size; i++){
+            if (!c.contains(current.value)){
+                this.removeIndex(i);
+            }
+            current = current.getNext();
+        }
+        return true;
     }
 
     @Override
     public void clear() {
-
+        firstElementh = null;
+        size = 0;
     }
 
 }
