@@ -1,5 +1,6 @@
 package Task2;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -118,9 +119,10 @@ public class MyLinkedList<T> implements Collection<T> {
         Object[] res = new Object[size];
         MyLinkedListNode<T> current = firstElementh;
         int counter = -1;
-        while (current != null) {
+        while(current != null) {
+            System.out.println(current.getValue());
             counter++;
-            res[counter] = current.getValue();
+            // res[counter] = current.getValue();
             current = current.getNext();
         }
         return res;
@@ -150,10 +152,55 @@ public class MyLinkedList<T> implements Collection<T> {
 
     public T get(int index) {
         MyLinkedListNode<T> current = firstElementh;
-        for (int i = 0; i < index ; i++) {
+        for (int i = 0; i < index; i++) {
             current = current.getNext();
         }
         return current.getValue();
+    }
+
+    public MyLinkedListNode<T> getElementh(int index) {
+        MyLinkedListNode<T> current = firstElementh;
+        for (int i = 0; i < index; i++) {
+            current = current.getNext();
+        }
+        return current;
+    }
+
+    public void setNextIndex(int index, MyLinkedListNode<T> node) {
+        MyLinkedListNode<T> current = firstElementh;
+        for (int i = 0; i < index; i++) {
+            current = current.getNext();
+        }
+        current.setNext(node);
+    }
+
+    public void insert(int index, MyLinkedListNode<T> value) {
+        System.out.println(value.getValue());
+        System.out.println(value.getNext());
+        if(index == 0){
+            value.setNext(firstElementh);
+            firstElementh = value;
+            size++;
+        }else if (index == 1){
+            value.setNext(firstElementh.getNext());
+            firstElementh.setNext(value);
+            size++;
+        }else{
+            MyLinkedListNode<T> current = this.getElementh(index - 1);
+            value.setNext(current.getNext());
+            if(index == size){
+                current.setNext(null);
+            }else{
+                current.setNext(value);
+            }
+            size++;
+            for(int i = index - 1; i < size; i++){
+                this.getElementh(i).setIndex(this.getElementh(i).getIndex());
+            }
+
+        }
+
+
     }
 
     public void set(int index, T value) {
@@ -163,6 +210,7 @@ public class MyLinkedList<T> implements Collection<T> {
         }
         current.setValue(value);
     }
+
 
     public void removeIndex(int index) {
         if (index == 0) {
@@ -224,7 +272,7 @@ public class MyLinkedList<T> implements Collection<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        for(T i : c){
+        for (T i : c) {
             this.add(i);
         }
         return true;
@@ -232,7 +280,7 @@ public class MyLinkedList<T> implements Collection<T> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        for (Object i : c){
+        for (Object i : c) {
             this.remove(i);
         }
         return true;
@@ -241,8 +289,8 @@ public class MyLinkedList<T> implements Collection<T> {
     @Override
     public boolean retainAll(Collection<?> c) {
         MyLinkedListNode<T> current = firstElementh;
-        for (int i = 0; i < size; i++){
-            if (!c.contains(current.value)){
+        for (int i = 0; i < size; i++) {
+            if (!c.contains(current.value)) {
                 this.removeIndex(i);
             }
             current = current.getNext();
@@ -254,6 +302,22 @@ public class MyLinkedList<T> implements Collection<T> {
     public void clear() {
         firstElementh = null;
         size = 0;
+    }
+
+    public static MyLinkedList<Integer> solution(MyLinkedList<Integer> list1, MyLinkedList<Integer> list2) {
+        MyLinkedList<Integer> res = new MyLinkedList<>();
+        res.addAll(list1);
+        int counter = 0;
+        for (int i = 0; i < res.size(); i++) {
+            if (res.get(i) > list2.get(counter)) {
+                res.insert(i, list2.getElementh(counter));
+                counter++;
+            }else{
+                System.out.println("Sss");
+            }
+        }
+        System.out.println(Arrays.toString(res.toArray()));
+        return null;
     }
 
 }

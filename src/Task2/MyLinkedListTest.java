@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -107,5 +108,16 @@ class MyLinkedListTest {
     void clear() {
         list.clear();
         Assertions.assertEquals(0, list.size());
+    }
+
+    @Test
+    void insert() {
+        MyLinkedList<Integer> exmp = new MyLinkedList<>(13);
+
+        list.add(32);
+        list.add(600);
+        System.out.println(Arrays.toString(list.toArray()));
+        list.insert(2, exmp.getElementh(0));
+        System.out.println(Arrays.toString(list.toArray()));
     }
 }
