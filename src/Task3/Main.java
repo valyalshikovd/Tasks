@@ -26,12 +26,6 @@ public class Main {
                 }
             }
         };
- //       PriorityQueue<String> q2 = new PriorityQueue(comparator);
- //       solution(q, new File("fileFor3Task.txt"));
- //       solution2(q2, new File("fileFor3Task.txt"));
- //       System.out.println(Arrays.toString(q2.toArray()));
-  //      q.write();
-
     }
     public static void solution(MyPriorityQueue queue, File file) throws IOException {
         FileReader fr = new FileReader(file);

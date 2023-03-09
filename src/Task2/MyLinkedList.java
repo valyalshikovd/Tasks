@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class MyLinkedList<T> implements Collection<T> {
-    private class MyLinkedListNode<T> {
+    public class MyLinkedListNode<T> {
         private T value;
-        private int index;
+  //      private int index;
         private MyLinkedListNode<T> next;
 
         public T getValue() {
@@ -18,13 +18,12 @@ public class MyLinkedList<T> implements Collection<T> {
             this.value = value;
         }
 
-        public int getIndex() {
-            return index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
-        }
+//        public int getIndex() {
+//            return index;
+//        }
+   //     public void setIndex(int index) {
+  //          this.index = index;
+  //      }
 
         public MyLinkedListNode<T> getNext() {
             return next;
@@ -34,9 +33,9 @@ public class MyLinkedList<T> implements Collection<T> {
             this.next = next;
         }
 
-        public MyLinkedListNode(T value, int index, MyLinkedListNode<T> next) {
+        public MyLinkedListNode(T value,  MyLinkedListNode<T> next) {
             this.value = value;
-            this.index = index;
+            //this.index = index;
             this.next = next;
         }
 
@@ -48,7 +47,7 @@ public class MyLinkedList<T> implements Collection<T> {
         public String toString() {
             return "MyLinkedListNode{" +
                     "value=" + value +
-                    ", index=" + index +
+                    //", index=" + index +
                     ", next=" + next +
                     '}';
         }
@@ -66,7 +65,7 @@ public class MyLinkedList<T> implements Collection<T> {
     }
 
     public MyLinkedList(T value) {
-        MyLinkedListNode<T> tmp = new MyLinkedListNode<>(value, 0, null);
+        MyLinkedListNode<T> tmp = new MyLinkedListNode<>(value, null);
         this.firstElementh = tmp;
         this.size = 1;
     }
@@ -120,9 +119,8 @@ public class MyLinkedList<T> implements Collection<T> {
         MyLinkedListNode<T> current = firstElementh;
         int counter = -1;
         while(current != null) {
-            System.out.println(current.getValue());
             counter++;
-            // res[counter] = current.getValue();
+            res[counter] = current.getValue();
             current = current.getNext();
         }
         return res;
@@ -136,7 +134,7 @@ public class MyLinkedList<T> implements Collection<T> {
     @Override
     public boolean add(T value) {
         if (firstElementh == null) {
-            MyLinkedListNode<T> tmp = new MyLinkedListNode<>(value, 0, null);
+            MyLinkedListNode<T> tmp = new MyLinkedListNode<>(value, null);
             firstElementh = tmp;
             this.size = 1;
         } else {
@@ -144,7 +142,7 @@ public class MyLinkedList<T> implements Collection<T> {
             while (current.nextExist()) {
                 current = current.getNext();
             }
-            current.setNext(new MyLinkedListNode<>(value, current.getIndex() + 1, null));
+            current.setNext(new MyLinkedListNode<>(value, null));
             size++;
         }
         return true;
@@ -154,6 +152,9 @@ public class MyLinkedList<T> implements Collection<T> {
         MyLinkedListNode<T> current = firstElementh;
         for (int i = 0; i < index; i++) {
             current = current.getNext();
+        }
+        if(current == null){
+            return null;
         }
         return current.getValue();
     }
@@ -174,9 +175,13 @@ public class MyLinkedList<T> implements Collection<T> {
         current.setNext(node);
     }
 
+    public MyLinkedListNode<T> getFirstElementh() {
+        return firstElementh;
+    }
+
     public void insert(int index, MyLinkedListNode<T> value) {
-        System.out.println(value.getValue());
-        System.out.println(value.getNext());
+//        System.out.println(value.getValue());
+//        System.out.println(value.getNext());
         if(index == 0){
             value.setNext(firstElementh);
             firstElementh = value;
@@ -186,17 +191,21 @@ public class MyLinkedList<T> implements Collection<T> {
             firstElementh.setNext(value);
             size++;
         }else{
-            MyLinkedListNode<T> current = this.getElementh(index - 1);
+            MyLinkedListNode<T> current = firstElementh;
+            for(int i = 0; i < index - 1; i++){
+                current = current.getNext();
+            }
             value.setNext(current.getNext());
             if(index == size){
                 current.setNext(null);
             }else{
                 current.setNext(value);
             }
+  //          value.setIndex(index );
             size++;
-            for(int i = index - 1; i < size; i++){
-                this.getElementh(i).setIndex(this.getElementh(i).getIndex());
-            }
+ //           for(int i = index + 2; i < size; i++){
+  //              this.getElementh(i).setIndex(this.getElementh(i).getIndex() + 1);
+   //         }
 
         }
 
@@ -228,6 +237,26 @@ public class MyLinkedList<T> implements Collection<T> {
             current.setNext(null);
         }
         size--;
+    }
+    public MyLinkedListNode<T> popIndex(int index) {
+        if (index == 0) {
+            MyLinkedListNode<T> tmp = firstElementh;
+            firstElementh = firstElementh.getNext();
+            size--;
+            return tmp;
+        }
+        MyLinkedListNode<T> current = firstElementh;
+        for (int i = 0; i < index - 1; i++) {
+            current = current.getNext();
+        }
+        MyLinkedListNode<T> tmp = current.getNext();
+        if (current.getNext().nextExist()) {
+            current.setNext(current.getNext().getNext());
+        } else {
+            current.setNext(null);
+        }
+        size--;
+        return tmp;
     }
 
     @Override
@@ -307,17 +336,20 @@ public class MyLinkedList<T> implements Collection<T> {
     public static MyLinkedList<Integer> solution(MyLinkedList<Integer> list1, MyLinkedList<Integer> list2) {
         MyLinkedList<Integer> res = new MyLinkedList<>();
         res.addAll(list1);
-        int counter = 0;
         for (int i = 0; i < res.size(); i++) {
-            if (res.get(i) > list2.get(counter)) {
-                res.insert(i, list2.getElementh(counter));
-                counter++;
+            if (list2.get(0) != null && res.get(i) > list2.get(0)) {
+                res.insert(i, list2.popIndex(0));
+            }else if(list2.get(0) != null && res.get(res.size() - 1) != null){
+              if(res.get(res.size() - 1) < list2.get(0)) {
+                  res.getElementh(res.size() - 1).setNext(list2.popIndex(0));
+                  res.size++;
+              }
             }else{
                 System.out.println("Sss");
             }
         }
         System.out.println(Arrays.toString(res.toArray()));
-        return null;
+        return res;
     }
 
 }
