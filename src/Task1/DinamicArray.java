@@ -183,10 +183,6 @@ public class DinamicArray<T> implements Collection<T> {
         return base[i];
     }
 
-
-
-
-
     @Override
     public Object[] toArray() {
     Object[] res = new Object[this.size()];

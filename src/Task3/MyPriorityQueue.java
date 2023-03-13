@@ -52,15 +52,18 @@ public class MyPriorityQueue {
                     "value='" + value + '\'' +
                     '}';
         }
-        private boolean nextExist(){
+
+        private boolean nextExist() {
             return next != null;
         }
-        private boolean beforeExist(){
+
+        private boolean beforeExist() {
             return before != null;
         }
     }
-    public QueueNode firstElement;
-    public QueueNode lastElement;
+
+    private QueueNode firstElement;
+    private QueueNode lastElement;
     private int size;
 
     public MyPriorityQueue() {
@@ -68,82 +71,90 @@ public class MyPriorityQueue {
         this.lastElement = null;
         this.size = 0;
     }
+
     public MyPriorityQueue(String value) {
         QueueNode tmp = new QueueNode(value);
         this.firstElement = tmp;
         this.lastElement = tmp;
         this.size = 1;
     }
-    public void add(String value){
+
+    public void add(String value) {
         QueueNode tmp = new QueueNode(value);
-        if(size == 0){
+        if (size == 0) {
             firstElement = tmp;
             lastElement = tmp;
         }
-        if(size == 1){
-            if(firstElement.getSize() >= tmp.getSize()){
-            firstElement.setNext(tmp);
-            lastElement = tmp;
-            tmp.setBefore(firstElement);
-            }else{
+        if (size == 1) {
+            if (firstElement.getSize() >= tmp.getSize()) {
+                firstElement.setNext(tmp);
+                lastElement = tmp;
+                tmp.setBefore(firstElement);
+            } else {
                 tmp.setNext(firstElement);
                 firstElement.setNext(null);
                 firstElement.setBefore(tmp);
                 lastElement = firstElement;
                 firstElement = tmp;
             }
-        }else{
+        } else {
             QueueNode current = lastElement;
-            while(current != null){
-                if(current.getSize() >= tmp.getSize()){
-                    if(current.nextExist()){
+            while (current != null) {
+                if (current.getSize() >= tmp.getSize()) {
+                    if (current.nextExist()) {
                         tmp.setBefore(current);
                         tmp.setNext(current.getNext());
                         current.getNext().setBefore(tmp);
                         current.setNext(tmp);
                         size++;
                         return;
-                    }else{
+                    } else {
                         current.setNext(tmp);
                         tmp.setBefore(current);
                         lastElement = tmp;
                         size++;
                         return;
                     }
-                }else{
-                     current = current.getBefore();
+                } else {
+                    current = current.getBefore();
                 }
 
             }
         }
         size++;
     }
-    public String pop(){
+
+    public String pop() {
         String tmp = firstElement.getValue();
         firstElement.getNext().setBefore(null);
         firstElement = firstElement.getNext();
-        size --;
+        size--;
         return tmp;
     }
-    public String get(){
+
+    public String get() {
         return firstElement.getValue();
     }
-    public int size(){return size;}
 
-    public void write(){
+    public int size() {
+        return size;
+    }
+
+    public void write() {
         QueueNode tmp = firstElement;
         int counter = 0;
-        while (tmp != null){
-            System.out.print("[" + tmp.value + "], " );
+        while (tmp != null) {
+            System.out.print("[" + tmp.value + "], ");
             tmp = tmp.getNext();
             counter++;
-            if(counter == 5){
+            if (counter == 5) {
                 System.out.println();
                 counter = 0;
             }
         }
     }
-    public void clear(){
+
+    public void clear() {
         firstElement = null;
         lastElement = null;
         size = 0;

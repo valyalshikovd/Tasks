@@ -11,8 +11,9 @@ import java.util.PriorityQueue;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-   //     MyPriorityQueue q = new MyPriorityQueue();
-        new ManeFrame1();
+   //    MyPriorityQueue q = new MyPriorityQueue();
+    //    new ManeFrame1();
+
         Comparator<String> comparator = new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
@@ -26,6 +27,12 @@ public class Main {
                 }
             }
         };
+        PriorityQueue<String> queue = new PriorityQueue<>(comparator);
+        solution2(queue, new File(("fileFor3Task.txt")));
+        for(int i = 0; i < queue.size();){
+
+            System.out.println(queue.poll());
+        }
     }
     public static void solution(MyPriorityQueue queue, File file) throws IOException {
         FileReader fr = new FileReader(file);
@@ -50,5 +57,7 @@ public class Main {
         for (String i : res) {
             queue.add(i);
         }
+
+
     }
 }

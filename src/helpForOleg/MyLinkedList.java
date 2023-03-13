@@ -1,11 +1,11 @@
-package Task2;
+package helpForOleg;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
 public class MyLinkedList<T> implements Collection<T> {
-    public class MyLinkedListNode<T> {
+    protected class MyLinkedListNode<T> {
         private T value;
         //      private int index;
         private MyLinkedListNode<T> next;
@@ -18,12 +18,6 @@ public class MyLinkedList<T> implements Collection<T> {
             this.value = value;
         }
 
-//        public int getIndex() {
-//            return index;
-//        }
-        //     public void setIndex(int index) {
-        //          this.index = index;
-        //      }
 
         public MyLinkedListNode<T> getNext() {
             return next;
@@ -33,13 +27,12 @@ public class MyLinkedList<T> implements Collection<T> {
             this.next = next;
         }
 
-        public MyLinkedListNode(T value, MyLinkedListNode<T> next) {
+        protected MyLinkedListNode(T value, MyLinkedListNode<T> next) {
             this.value = value;
-            //this.index = index;
             this.next = next;
         }
 
-        private boolean nextExist() {
+        protected boolean nextExist() {
             return next != null;
         }
 
@@ -54,9 +47,9 @@ public class MyLinkedList<T> implements Collection<T> {
 
     }
 
-    private MyLinkedListNode<T> firstElementh;
+    protected MyLinkedListNode<T> firstElementh;
 
-    private int size;
+    protected int size;
 
     public MyLinkedList() {
         this.firstElementh = null;
