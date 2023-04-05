@@ -6,61 +6,61 @@ import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public class DinamicArray<T> implements Collection<T> {
-    private T[] base;
-    private int capacity;
+public class DinamicArray<T> implements Collection<T> {    //имплементировал интерфес collection т.е у меня здесь описаны
+    private T[] base; //основа коллекции простой массив         //почти все методы которые есть у других коллекциях java
+    private int capacity; //размер массива до переполнения
 
     public T[] getBase() {
         return base;
-    }
+    }  //геттер и сеттер на массив в основе
 
     public void setBase(T[] base) {
         this.base = base;
     }
 
     public DinamicArray() {
-        this.capacity = 10;
+        this.capacity = 10;                          //первый конструктор (по условию по умолчанию вместимость должна быть 10)
         this.base = (T[]) new Object[capacity];
     }
 
     public DinamicArray(int capacity) {
-        this.capacity = capacity;
+        this.capacity = capacity;                  //конструктор где в параметр передаем вместимость
         this.base = (T[]) new Object[capacity];
     }
 
     @Override
     public boolean add(T elem) {
         for (int i = 0; i < capacity; i++) {
-            if (base[i] == null) {
-                base[i] = elem;
+            if (base[i] == null) {                   //добавление элемента
+                base[i] = elem;         //перебираем все элементы в массиве пока не найдем пустую клетку
                 return true;
             }
         }
-        capacity = capacity * 2;
-        T[] newBase = (T[]) new Object[capacity];
+        capacity = capacity * 2;    //если клетку не нашли увеличиваем вместимость в два раза
+        T[] newBase = (T[]) new Object[capacity]; // и срздаем новый основной массив с увеличенным в 2 раза размером
         for (int i = 0; i < base.length; i++) {
-            newBase[i] = base[i];
+            newBase[i] = base[i];                       //перемещаем в него все элементы из старой базы
         }
         base = newBase;
         for (int i = 0; i < capacity; i++) {
-            if (base[i] == null) {
+            if (base[i] == null) {                 //добавляем элемент в пустое место
                 base[i] = elem;
                 return true;
-            }
+            }                         //сейчас постфактум смотрю и понимаю, что можно улучшить но так работает
         }
         return false;
     }
 
     @Override
     public boolean remove(Object o) {
-        T[] res = (T[]) new Object[base.length];
+        T[] res = (T[]) new Object[base.length];        //удаление объектов по значению
         int counter = 0;
-        for (int i = 0; i < base.length; i++){
+        for (int i = 0; i < base.length; i++){           //метод удаляет ВСЕ объекты равные переданному в аргумент
             if(Objects.equals(base[i], o)){
-                base[i] = null;
+                base[i] = null;            //перебираем массив до того момента пока не найдем совпадение с тем что надо
                 counter++;
             }else{
-                res[i - counter] = base[i];
+                res[i - counter] = base[i];     //как только находим элемент сдвигаем все что после него
             }
         }
         base = res;
@@ -70,8 +70,8 @@ public class DinamicArray<T> implements Collection<T> {
         T[] res = (T[]) new Object[base.length];
         int counter = 0;
         boolean flag = true;
-        for (int i = 0; i < base.length; i++){
-            if(Objects.equals(base[i], o) && flag){
+        for (int i = 0; i < base.length; i++){           //просто удаляет первый элемент и двигает все остальные
+            if(Objects.equals(base[i], o) && flag){        //элементы
                 base[i] = null;
                 counter++;
                 flag = false;
