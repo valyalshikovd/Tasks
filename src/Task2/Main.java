@@ -7,7 +7,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-                new MyFrame();
+        //        new MyFrame();
         MyLinkedList<Integer> list1 = new MyLinkedList<>(1);
         list1.addAll(List.of(3, 4, 5, 44, 45));
         MyLinkedList<Integer> list2 = new MyLinkedList<>();

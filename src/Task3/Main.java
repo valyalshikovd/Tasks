@@ -11,8 +11,8 @@ import java.util.PriorityQueue;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-       MyPriorityQueue q = new MyPriorityQueue();
-        new ManeFrame1();
+   //    MyPriorityQueue q = new MyPriorityQueue();
+    //    new ManeFrame1();
 
         Comparator<String> comparator = new Comparator<String>() {
             @Override
