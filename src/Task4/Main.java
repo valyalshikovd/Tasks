@@ -10,7 +10,7 @@ public class Main {
             arr[i] = 10 - i;
         }
         Integer[] arr2 = {1, 2, 3, 4, 5, 10, 9, 8, 7, 6};
-        for (Integer i : arr2) {
+        for (Integer i : arr) {
             System.out.print(i + " ");
         }
         System.out.println();
@@ -23,8 +23,8 @@ public class Main {
         boolean[] boolArr5 = {true, true, true, true, false, false, false, false, false, false};
 
 
-        sort(arr2, boolArr2);
-        for (Integer i : arr2) {
+        sort(arr, boolArr);
+        for (Integer i : arr) {
             System.out.print(i + " ");
         }
     }
@@ -44,23 +44,16 @@ public class Main {
                     }                       // -1 если счетчик не может найти нормальный элемент
                     counter++;
                 }
-
                 if (counter == -1) {
                     continue;           //если -1 скипаем итерацию цикла
                 }
 
-
                 if (data[i].compareTo(data[i + 1 + counter]) > 0 && fixed[i]) {
-
-
                     isSorted = false;
-
                     temp = data[i];
                     data[i] = data[i + 1 + counter];
                     data[i + 1 + counter] = temp;
                 }
-
-
             }
         }
     }

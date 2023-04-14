@@ -123,24 +123,42 @@ public class MyBinaryTree <T extends Comparable<T>> {
     public void remove(T value){
         MyBinaryTreeOperand<T> parent = recursiveEnumerationToSearchParentOperand(root, value);
         if ((parent.leftOperand != null && parent.leftOperand.getValue().compareTo(value) == 0)){
+            ///// удаление левого листа
             if(parent.leftOperand.leftOperand == null && parent.leftOperand.rightOperand == null){
                 parent.leftOperand = null;
+                return;
+                ///
             }else {
 
                 if (parent.leftOperand.leftOperand != null && parent.leftOperand.rightOperand == null) {
                     parent.leftOperand = parent.leftOperand.leftOperand;
+                    return;
                 }
 
                 if (parent.leftOperand.rightOperand != null && parent.leftOperand.leftOperand == null) {
                     parent.leftOperand = parent.leftOperand.rightOperand;
+                    return;
                 }
+            }
+
+            if (parent.leftOperand.leftOperand != null && parent.leftOperand.rightOperand != null){
+                System.out.println("УСЛОВИЕ");
+                MyBinaryTreeOperand<T> curr = parent;
+                while (curr.rightOperand != null){
+                    MyBinaryTreeOperand<T> tmp = curr.leftOperand.leftOperand;
+                    curr.leftOperand = curr.leftOperand.rightOperand;
+                    curr.leftOperand.leftOperand = tmp;
+                    curr = curr.rightOperand;
+                }
+                return;
             }
         }
 
         if ((parent.rightOperand != null && parent.rightOperand.getValue().compareTo(value) == 0)){
-
+            //////////удаление правого листа
             if(parent.rightOperand.leftOperand == null && parent.rightOperand.rightOperand == null){
                 parent.rightOperand = null;
+                ////////
             }else {
 
                 if (parent.rightOperand.leftOperand != null && parent.rightOperand.rightOperand == null) {
@@ -151,7 +169,17 @@ public class MyBinaryTree <T extends Comparable<T>> {
                     parent.rightOperand = parent.rightOperand.rightOperand;
                 }
             }
-
+            if (parent.rightOperand.leftOperand != null && parent.rightOperand.rightOperand != null){
+                System.out.println("УСЛОВИЕ");
+                MyBinaryTreeOperand<T> curr = parent;
+                while (curr.rightOperand != null){
+                    MyBinaryTreeOperand<T> tmp = curr.rightOperand.leftOperand;
+                    curr.rightOperand = curr.rightOperand.rightOperand;
+                    curr.rightOperand.leftOperand = tmp;
+                    curr = curr.rightOperand;
+                }
+                return;
+            }
         }
 
     }
