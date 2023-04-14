@@ -121,22 +121,62 @@ public class MyBinaryTree <T extends Comparable<T>> {
         }
     }
     public void remove(T value){
+        MyBinaryTreeOperand<T> parent = recursiveEnumerationToSearchParentOperand(root, value);
+        if ((parent.leftOperand != null && parent.leftOperand.getValue().compareTo(value) == 0)){
+            if(parent.leftOperand.leftOperand == null && parent.leftOperand.rightOperand == null){
+                parent.leftOperand = null;
+            }else {
 
-    }
-    private void recursiveEnumerationToSearch(MyBinaryTreeOperand<T> curr, T value){
-        if(curr.getValue().compareTo(value) < 0) {
-            if(curr.rightOperand == null){
-                curr.setRightOperand(added);            //////////////////////////////
-            }else{
-                recursiveEnumerationToAdd(curr.rightOperand, added);
-            }
-        }else{
-            if(curr.leftOperand == null){
-                curr.setLeftOperand(added);
-            }else{
-                recursiveEnumerationToAdd(curr.leftOperand, added);
+                if (parent.leftOperand.leftOperand != null && parent.leftOperand.rightOperand == null) {
+                    parent.leftOperand = parent.leftOperand.leftOperand;
+                }
+
+                if (parent.leftOperand.rightOperand != null && parent.leftOperand.leftOperand == null) {
+                    parent.leftOperand = parent.leftOperand.rightOperand;
+                }
             }
         }
+
+        if ((parent.rightOperand != null && parent.rightOperand.getValue().compareTo(value) == 0)){
+
+            if(parent.rightOperand.leftOperand == null && parent.rightOperand.rightOperand == null){
+                parent.rightOperand = null;
+            }else {
+
+                if (parent.rightOperand.leftOperand != null && parent.rightOperand.rightOperand == null) {
+                    parent.rightOperand = parent.rightOperand.leftOperand;
+                }
+
+                if (parent.rightOperand.rightOperand != null && parent.rightOperand.leftOperand == null) {
+                    parent.rightOperand = parent.rightOperand.rightOperand;
+                }
+            }
+
+        }
+
+    }
+    private MyBinaryTreeOperand<T> recursiveEnumerationToSearchParentOperand(MyBinaryTreeOperand<T> curr, T value){
+
+        if(curr.leftOperand != null && curr.leftOperand.getValue() == value ){
+            return curr;
+        }
+        if(curr.rightOperand != null && curr.rightOperand.getValue() == value ){
+            return curr;
+        }
+        if(curr.rightOperand == null && curr.leftOperand == null){
+            return null;
+        }
+
+        if(curr.getValue().compareTo(value) < 0){
+            System.out.println("2-st");
+            return recursiveEnumerationToSearchParentOperand(curr.rightOperand, value);
+        }
+        if(curr.getValue().compareTo(value) > 0){
+            System.out.println("3-st");
+            return recursiveEnumerationToSearchParentOperand(curr.leftOperand, value);
+        }
+        System.out.println("4-th");
+        return null;
     }
 
 

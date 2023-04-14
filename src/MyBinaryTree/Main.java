@@ -13,5 +13,9 @@ public class Main {
         tree.add(5);
         tree.add(6);
         tree.write();
+        System.out.println();
+        tree.remove(6);
+
+        tree.write();
     }
 }
