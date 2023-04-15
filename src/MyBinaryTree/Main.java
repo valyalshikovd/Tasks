@@ -27,8 +27,17 @@ public class Main {
         tree.add(156);
         tree.write();
         System.out.println();
-        tree.remove(156);
+        tree.remove(5);
 
         tree.write();
+
+        MyBinaryTree<Integer> tree2 = new MyBinaryTree<Integer>();
+        tree2.add(5);
+        tree2.add(3);
+        System.out.println();
+        tree2.write();
+        tree2.remove(5);
+        System.out.println();
+        tree2.write();
     }
 }
