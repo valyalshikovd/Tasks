@@ -27,7 +27,21 @@ public class Main {
         tree.add(156);
         tree.write();
         System.out.println();
+        tree.remove(8);
+        tree.write();
+        tree.remove(10);
+        tree.write();
+        tree.remove(1);
+        tree.write();
+        tree.remove(3);
+        tree.write();
+        tree.remove(25);
+        tree.write();
+
+
         tree.remove(5);
+
+
 
         tree.write();
 
