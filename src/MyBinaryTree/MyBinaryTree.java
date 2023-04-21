@@ -118,6 +118,7 @@ public class MyBinaryTree<T extends Comparable<T>> {
         if (curr.leftOperand != null) {
             recursiveEnumerationToWrite(curr.leftOperand);
         }
+        System.out.print(curr.getValue() + " ");
         if (curr.rightOperand != null) {
             recursiveEnumerationToWrite(curr.rightOperand);
         }
@@ -163,14 +164,14 @@ public class MyBinaryTree<T extends Comparable<T>> {
         MyBinaryTreeOperand<T> parent = recursiveEnumerationToSearchParentOperand(root, value);
       //  System.out.println(parent.getValue());
         if(parent.leftOperand != null && parent.leftOperand.getValue() == value){
-            helpToDelete(parent, parent.leftOperand, value, 1);
+            helpToDelete(parent, parent.leftOperand, 1);
         }
         if(parent.rightOperand != null && parent.rightOperand.getValue() == value){
-            helpToDelete(parent, parent.rightOperand, value, 0);
+            helpToDelete(parent, parent.rightOperand, 0);
         }
     }
 
-    private void helpToDelete(MyBinaryTreeOperand<T> parent, MyBinaryTreeOperand<T> operand, T value, int mode){
+    private void helpToDelete(MyBinaryTreeOperand<T> parent, MyBinaryTreeOperand<T> operand, int mode){
         if(operand.leftOperand == null && operand.rightOperand == null){
             if(mode == 1){
                 parent.leftOperand = null;

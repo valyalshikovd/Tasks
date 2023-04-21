@@ -1,5 +1,6 @@
 package Task6;
 
+import MyBinaryTree.MyBinaryTree;
 import Task2.MyLinkedList;
 
 import java.util.Collection;
@@ -73,10 +74,72 @@ public class PutOrderMap <K, V> implements Map {
             this.key = key;
             this.value = value;
         }
+
+    }
+
+    public class KeyAndNumber implements Comparable<KeyAndNumber> {
+        K key;
+        Integer number;
+
+//        @Override
+//        public int compareTo(Object o) {
+//
+//            if(this.number == ((KeyAndNumber)o).number){
+//                return 0;
+//            }
+//            else if(this.number > ((KeyAndNumber)o).number){
+//                return -1;
+//            }else{
+//                return 1;
+//            }
+//        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public void setKey(K key) {
+            this.key = key;
+        }
+
+        public Integer getNumber() {
+            return number;
+        }
+
+        public void setNumber(Integer number) {
+            this.number = number;
+        }
+
+        @Override
+        public String toString() {
+            return "KeyAndNumber{" +
+                    "key=" + key +
+                    ", number=" + number +
+                    '}';
+        }
+
+        public KeyAndNumber(K key, Integer number) {
+            this.key = key;
+            this.number = number;
+        }
+
+        @Override
+        public int compareTo(KeyAndNumber o) {
+            if(this.number == o.number){
+                return 0;
+            }
+            else if(this.number > o.number){
+                return -1;
+            }else{
+                return 1;
+            }
+        }
     }
 
     MyDictionary<Integer, KeyAndValue> orderDict = new MyDictionary<>();
     MyDictionary<K, ValueAndOrder> keyDict = new MyDictionary<>();
+
+    MyBinaryTree<KeyAndNumber> tree = new MyBinaryTree<KeyAndNumber>();
     MyLinkedList<Integer> numList;
     Integer counterAdded;
     Integer size;

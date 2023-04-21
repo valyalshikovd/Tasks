@@ -17,8 +17,8 @@ public class Main {
 
         threeTwo.add(4);
         threeTwo.add(3);
+        threeTwo.add(6);
         threeTwo.add(5);
-        threeTwo.add(9);
         threeTwo.add(2);
 
         System.out.println(threeOne.equals(threeTwo));
