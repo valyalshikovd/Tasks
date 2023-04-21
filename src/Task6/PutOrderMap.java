@@ -140,7 +140,7 @@ public class PutOrderMap <K, V> implements Map {
     MyDictionary<K, ValueAndOrder> keyDict = new MyDictionary<>();
 
     MyBinaryTree<KeyAndNumber> tree = new MyBinaryTree<KeyAndNumber>();
-    MyLinkedList<Integer> numList;
+
     Integer counterAdded;
     Integer size;
 
