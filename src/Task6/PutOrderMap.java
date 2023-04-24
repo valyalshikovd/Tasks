@@ -11,23 +11,16 @@ public class PutOrderMap <K, V> implements Map {
     private class ValueAndOrder<V> {
         int num;
         V value;
-
-        public int getNum() {
-            return num;
-        }
-
+        public int getNum() {return num;}
         public void setNum(int num) {
             this.num = num;
         }
-
         public V getValue() {
             return value;
         }
-
         public void setValue(V value) {
             this.value = value;
         }
-
         @Override
         public String toString() {
             return "ValueAndOrder{" +
@@ -35,81 +28,25 @@ public class PutOrderMap <K, V> implements Map {
                     ", value=" + value +
                     '}';
         }
-
         public ValueAndOrder(int num, V value) {
             this.num = num;
             this.value = value;
         }
     }
-
-    private class KeyAndValue<K,V>{
-        K key;
-        V value;
-
-        public K getKey() {
-            return key;
-        }
-
-        public void setKey(K key) {
-            this.key = key;
-        }
-
-        public V getValue() {
-            return value;
-        }
-
-        public void setValue(V value) {
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return "KeyAndValue{" +
-                    "key=" + key +
-                    ", value=" + value +
-                    '}';
-        }
-
-        public KeyAndValue(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-
-    }
-
     public class KeyAndNumber implements Comparable<KeyAndNumber> {
         K key;
         Integer number;
-
-//        @Override
-//        public int compareTo(Object o) {
-//
-//            if(this.number == ((KeyAndNumber)o).number){
-//                return 0;
-//            }
-//            else if(this.number > ((KeyAndNumber)o).number){
-//                return -1;
-//            }else{
-//                return 1;
-//            }
-//        }
-
         public K getKey() {
             return key;
         }
 
-        public void setKey(K key) {
-            this.key = key;
-        }
-
+        public void setKey(K key) {this.key = key;}
         public Integer getNumber() {
             return number;
         }
-
         public void setNumber(Integer number) {
             this.number = number;
         }
-
         @Override
         public String toString() {
             return "KeyAndNumber{" +
@@ -117,7 +54,6 @@ public class PutOrderMap <K, V> implements Map {
                     ", number=" + number +
                     '}';
         }
-
         public KeyAndNumber(K key, Integer number) {
             this.key = key;
             this.number = number;
@@ -126,78 +62,83 @@ public class PutOrderMap <K, V> implements Map {
         @Override
         public int compareTo(KeyAndNumber o) {
             if(this.number == o.number){
+              //  System.out.println("чзх");
                 return 0;
             }
             else if(this.number > o.number){
-                return -1;
-            }else{
+              //  System.out.println("чзх2");
                 return 1;
+            }else{
+             //   System.out.println("чзх3");
+                return -1;
             }
         }
     }
 
-    MyDictionary<Integer, KeyAndValue> orderDict = new MyDictionary<>();
-    MyDictionary<K, ValueAndOrder> keyDict = new MyDictionary<>();
-
+    MyDictionary<K, ValueAndOrder> keyDict;
     MyBinaryTree<KeyAndNumber> tree = new MyBinaryTree<KeyAndNumber>();
-
     Integer counterAdded;
     Integer size;
-
     public PutOrderMap() {
-        this.orderDict = new MyDictionary<>();
         this.keyDict = new MyDictionary<>();
         this.counterAdded = 0;
-        this.numList = new MyLinkedList<>();
         this.size = 0;
     }
 
     public void add(K key, V value){
         size++;
-        KeyAndValue<K, V> added1 = new KeyAndValue<>(key, value);
-        numList.
+        KeyAndNumber added1 = new KeyAndNumber(key, counterAdded);
         ValueAndOrder<V> added2 = new ValueAndOrder<>(counterAdded, value);
-        orderDict.add(counterAdded, added1);
+        tree.add(added1);
         keyDict.add(key, added2);
+        counterAdded++;
     }
-    pub
+    public void write(){
+        tree.doing(x -> {
+             System.out.print(keyDict.get(x.getKey()));
+             return 0;
+        });
+    }
 
 
 
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
     public boolean containsKey(Object key) {
-        return false;
+        return keyDict.containsKey(key);
     }
 
     @Override
     public boolean containsValue(Object value) {
-        return false;
+        return keyDict.containsValue(value);
     }
 
     @Override
     public Object get(Object key) {
-        return null;
+        return ((ValueAndOrder<V>)keyDict.get(key)).getValue();
     }
 
     @Override
     public Object put(Object key, Object value) {
-        return null;
+        return ((ValueAndOrder<V>)keyDict.put(key, value)).getValue();
     }
 
     @Override
     public Object remove(Object key) {
-        return null;
+        ValueAndOrder<V> tmp = (ValueAndOrder<V>) keyDict.remove(key);
+        tree.remove(new KeyAndNumber((K) key, tmp.num));
+        tree.write();
+        return tmp.getValue();
     }
 
     @Override

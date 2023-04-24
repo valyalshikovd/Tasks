@@ -2,6 +2,7 @@ package MyBinaryTree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class MyBinaryTree<T extends Comparable<T>> {
 
@@ -119,6 +120,21 @@ public class MyBinaryTree<T extends Comparable<T>> {
             recursiveEnumerationToWrite(curr.leftOperand);
         }
         System.out.print(curr.getValue() + " ");
+        if (curr.rightOperand != null) {
+            recursiveEnumerationToWrite(curr.rightOperand);
+        }
+    }
+
+    public void doing(Function<T, Integer> function) {
+        this.recursiveEnumerationToDoing(root, function);
+        System.out.println();
+    }
+
+    private void recursiveEnumerationToDoing(MyBinaryTreeOperand<T> curr, Function<T,Integer> function) {
+        if (curr.leftOperand != null) {
+            recursiveEnumerationToWrite(curr.leftOperand);
+        }
+        function.apply(curr.value);
         if (curr.rightOperand != null) {
             recursiveEnumerationToWrite(curr.rightOperand);
         }
