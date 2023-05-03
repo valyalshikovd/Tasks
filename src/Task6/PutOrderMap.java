@@ -6,6 +6,7 @@ import Task2.MyLinkedList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 public class PutOrderMap <K, V> implements Map {
     private class ValueAndOrder<V> {
@@ -62,14 +63,11 @@ public class PutOrderMap <K, V> implements Map {
         @Override
         public int compareTo(KeyAndNumber o) {
             if(this.number == o.number){
-              //  System.out.println("чзх");
                 return 0;
             }
             else if(this.number > o.number){
-              //  System.out.println("чзх2");
                 return 1;
             }else{
-             //   System.out.println("чзх3");
                 return -1;
             }
         }
@@ -99,9 +97,11 @@ public class PutOrderMap <K, V> implements Map {
              return 0;
         });
     }
-
-
-
+    public void doing(Function<Object,Integer> function){
+        tree.doing(
+                function::apply
+        );
+    }
 
     @Override
     public int size() {
@@ -137,7 +137,7 @@ public class PutOrderMap <K, V> implements Map {
     public Object remove(Object key) {
         ValueAndOrder<V> tmp = (ValueAndOrder<V>) keyDict.remove(key);
         tree.remove(new KeyAndNumber((K) key, tmp.num));
-        tree.write();
+       // tree.write();
         return tmp.getValue();
     }
 
@@ -148,6 +148,8 @@ public class PutOrderMap <K, V> implements Map {
 
     @Override
     public void clear() {
+         keyDict.clear();
+         tree.clear();
 
     }
 

@@ -2,7 +2,7 @@ package Task6;
 
 import java.util.*;
 
-import Task1.DinamicArray;
+
 import Task2.MyLinkedList;
 
 public class MyDictionary <K, V> implements Map {
@@ -49,6 +49,7 @@ public class MyDictionary <K, V> implements Map {
         this.base = new MyLinkedList[10];
     }
     public void add(K key, V value){
+        size++;
         int index = this.hash(key);
         if (base[index] == null){
             base[index] = new MyLinkedList<>(new Element<>(key, value));

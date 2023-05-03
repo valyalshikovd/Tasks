@@ -110,33 +110,29 @@ public class MyBinaryTree<T extends Comparable<T>> {
         }
     }
 
-    public void write() {
-        this.recursiveEnumerationToWrite(root);
+    public void write(){
+
+
+        this.recursiveEnumerationToDoing(root,
+                x-> {
+                    System.out.print(x + " ");
+                    return null;
+                }
+        );
         System.out.println();
     }
-
-    private void recursiveEnumerationToWrite(MyBinaryTreeOperand<T> curr) {
-        if (curr.leftOperand != null) {
-            recursiveEnumerationToWrite(curr.leftOperand);
-        }
-        System.out.print(curr.getValue() + " ");
-        if (curr.rightOperand != null) {
-            recursiveEnumerationToWrite(curr.rightOperand);
-        }
-    }
-
-    public void doing(Function<T, Integer> function) {
+    public void doing(Function<T, Object> function) {
         this.recursiveEnumerationToDoing(root, function);
         System.out.println();
     }
 
-    private void recursiveEnumerationToDoing(MyBinaryTreeOperand<T> curr, Function<T,Integer> function) {
+    private void recursiveEnumerationToDoing(MyBinaryTreeOperand<T> curr, Function<T,Object> function) {
         if (curr.leftOperand != null) {
-            recursiveEnumerationToWrite(curr.leftOperand);
+            recursiveEnumerationToDoing(curr.leftOperand, function );
         }
         function.apply(curr.value);
         if (curr.rightOperand != null) {
-            recursiveEnumerationToWrite(curr.rightOperand);
+            recursiveEnumerationToDoing(curr.rightOperand, function );
         }
     }
 
@@ -250,11 +246,7 @@ public class MyBinaryTree<T extends Comparable<T>> {
             parent.rightOperand.rightOperand = tmp.rightOperand;
             parent.rightOperand.leftOperand = tmp.leftOperand;
         }
-
-
-
     }
-
     private MyBinaryTreeOperand<T> recursiveEnumerationToSearchParentOperand(MyBinaryTreeOperand<T> curr, T
             value) {
 
@@ -277,6 +269,7 @@ public class MyBinaryTree<T extends Comparable<T>> {
         }
         return null;
     }
-
-
+    public void clear(){
+        root = null;
+    }
 }
