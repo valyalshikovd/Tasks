@@ -1,5 +1,7 @@
 package Task2;
 
+import Task3.MyQueue;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -90,6 +92,15 @@ public class MyLinkedList<T> implements Collection<T> {
             current = current.getNext();
         }
         return false;
+    }
+    public void write(){
+        System.out.print(" [ ");
+        MyLinkedListNode<T> curr = firstElementh;
+        while(curr.next != null){
+            System.out.print(curr.value + " ");
+            curr = curr.next;
+        }
+        System.out.print(" ]");
     }
 
     @Override
